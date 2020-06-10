@@ -3,48 +3,15 @@ import os
 import sys
 from flask import Flask, request, jsonify
 import psycopg2 as pg
+from repo import *
 
 DATABASE_URL = os.environ['DATABASE_URL']
-
 
 def create_app():
     myapp = Flask(__name__)
     with myapp.app_context():
         init_db()
     return myapp
-
-
-# get connection
-def get_connection():
-    conn = pg.connect(DATABASE_URL, sslmode='require')
-    return conn
-
-
-# init db
-def init_db():
-    cars = (
-    (1, 'Audi', 52642),
-    (2, 'Mercedes', 57127),
-    (3, 'Skoda', 9000),
-    (4, 'Volvo', 29000),
-    (5, 'Bentley', 350000),
-    (6, 'Citroen', 21000),
-    (7, 'Hummer', 41400),
-    (8, 'Volkswagen', 21600)
-    )
-    conn = get_connection()
-    with conn:
-        cur = conn.cursor()
-        cur.execute("DROP TABLE IF EXISTS cars")
-        cur.execute("""
-        CREATE TABLE cars(
-            id SERIAL PRIMARY KEY,
-            name VARCHAR(255),
-            price INT)
-        """)
-        query = "INSERT INTO cars (id, name, price) VALUES (%s, %s, %s)"
-        cur.executemany(query, cars)
-        conn.commit()
 
 # create app
 app = create_app()
@@ -71,6 +38,19 @@ def respond():
 
     # Return the response in json format
     return jsonify(response)
+
+
+@app.route('/getcars/', methods=['GET'])
+def getcars():
+    response = {}
+    try:
+        results = get_all_cars()
+        response["MESSAGE"] = results
+    except:
+        response["ERROR"] = "Server error"
+    # Return the response in json format
+    return jsonify(response)
+
 
 @app.route('/post/', methods=['POST'])
 def post_something():
