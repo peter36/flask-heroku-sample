@@ -2,6 +2,8 @@ import os
 import sys
 import psycopg2 as pg
 
+DATABASE_URL = os.environ['DATABASE_URL']
+
 # get connection
 def get_connection():
     conn = pg.connect(DATABASE_URL, sslmode='require')

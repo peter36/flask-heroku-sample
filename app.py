@@ -5,8 +5,6 @@ from flask import Flask, request, jsonify
 import psycopg2 as pg
 from repo import *
 
-DATABASE_URL = os.environ['DATABASE_URL']
-
 def create_app():
     myapp = Flask(__name__)
     with myapp.app_context():
