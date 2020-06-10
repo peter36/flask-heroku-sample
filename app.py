@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify
 import psycopg2 as pg
 
 DATABASE_URL = os.environ['DATABASE_URL']
+app = None
 
 def create_app():
     app = Flask(__name__)
@@ -90,5 +91,6 @@ def index():
 
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support
+    global app
     app = create_app()
     app.run(threaded=True, port=5000)
