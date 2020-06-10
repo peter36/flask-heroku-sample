@@ -53,7 +53,7 @@ def getcars():
 
 
 @app.route('/addcar/', methods=['POST'])
-def getcars():
+def addcar():
     name = request.form.get('name')
     price = request.form.get('price')
     response = {}
