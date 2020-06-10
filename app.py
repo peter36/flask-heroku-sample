@@ -6,16 +6,21 @@ import psycopg2 as pg
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
+
 def create_app():
     myapp = Flask(__name__)
     with myapp.app_context():
         init_db()
     return myapp
 
+
+# get connection
 def get_connection():
     conn = pg.connect(DATABASE_URL, sslmode='require')
     return conn
 
+
+# init db
 def init_db():
     cars = (
     (1, 'Audi', 52642),
