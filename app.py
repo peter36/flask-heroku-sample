@@ -44,7 +44,7 @@ def getcars():
     try:
         results = get_all_cars()
         response["MESSAGE"] = results
-    except Error as error:
+    except Exception as error:
         print(error)
         response["ERROR"] = "Server error"
 
