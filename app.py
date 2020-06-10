@@ -52,6 +52,22 @@ def getcars():
     return jsonify(response)
 
 
+@app.route('/addcar/', methods=['POST'])
+def getcars():
+    name = request.form.get('name')
+    price = request.form.get('price')
+    response = {}
+    try:
+        results = add_one_car(name, price)
+        response["MESSAGE"] = results
+    except Exception as error:
+        print(error)
+        response["ERROR"] = "Server error"
+
+    # Return the response in json format
+    return jsonify(response)
+
+
 @app.route('/post/', methods=['POST'])
 def post_something():
     param = request.form.get('name')
