@@ -28,8 +28,8 @@ def init_db():
     (8, 'Volkswagen', 21600)
     )
     conn = get_connection()
-    with con:
-        cur = con.cursor()
+    with conn:
+        cur = conn.cursor()
         cur.execute("DROP TABLE IF EXISTS cars")
         cur.execute("""
         CREATE TABLE cars(
@@ -39,7 +39,7 @@ def init_db():
         """)
         query = "INSERT INTO cars (id, name, price) VALUES (%s, %s, %s)"
         cur.executemany(query, cars)
-        con.commit()
+        conn.commit()
 
 # create app
 app = create_app()
