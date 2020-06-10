@@ -1,6 +1,46 @@
 # app.py
 from flask import Flask, request, jsonify
-app = Flask(__name__)
+import psycopg2 as pg
+
+DATABASE_URL = os.environ['DATABASE_URL']
+
+def create_app():
+    app = Flask(__name__)
+    with app.app_context():
+        init_db()
+    return app
+
+def get_connection():
+    conn = pg.connect(DATABASE_URL, sslmode='require')
+    return conn
+
+def init_db():
+    cars = (
+    (1, 'Audi', 52642),
+    (2, 'Mercedes', 57127),
+    (3, 'Skoda', 9000),
+    (4, 'Volvo', 29000),
+    (5, 'Bentley', 350000),
+    (6, 'Citroen', 21000),
+    (7, 'Hummer', 41400),
+    (8, 'Volkswagen', 21600)
+    )
+
+
+    conn = get_connection()
+    with con:
+        cur = con.cursor()
+        cur.execute("DROP TABLE IF EXISTS cars")
+        cur.execute("""
+        CREATE TABLE cars(
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255),
+            price INT)
+        """)
+        query = "INSERT INTO cars (id, name, price) VALUES (%s, %s, %s)"
+        cur.executemany(query, cars)
+        con.commit()
+
 
 @app.route('/getmsg/', methods=['GET'])
 def respond():
@@ -48,4 +88,5 @@ def index():
 
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support
+    app = create_app()
     app.run(threaded=True, port=5000)
