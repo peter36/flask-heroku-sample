@@ -6,7 +6,6 @@ import psycopg2 as pg
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
-
 def create_app():
     myapp = Flask(__name__)
     with myapp.app_context():
@@ -41,6 +40,9 @@ def init_db():
         query = "INSERT INTO cars (id, name, price) VALUES (%s, %s, %s)"
         cur.executemany(query, cars)
         con.commit()
+
+# create app
+app = create_app()
 
 @app.route('/getmsg/', methods=['GET'])
 def respond():
@@ -85,9 +87,6 @@ def post_something():
 @app.route('/')
 def index():
     return "<h1>Welcome to our server !!</h1>"
-
-# create app
-app = create_app()
 
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support
