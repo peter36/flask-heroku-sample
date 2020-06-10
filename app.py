@@ -44,8 +44,10 @@ def getcars():
     try:
         results = get_all_cars()
         response["MESSAGE"] = results
-    except:
+    except Error as error:
+        print(error)
         response["ERROR"] = "Server error"
+
     # Return the response in json format
     return jsonify(response)
 
