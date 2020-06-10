@@ -1,4 +1,6 @@
 # app.py
+import os
+import sys
 from flask import Flask, request, jsonify
 import psycopg2 as pg
 
