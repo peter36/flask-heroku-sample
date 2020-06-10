@@ -39,10 +39,8 @@ def init_db():
 
 def get_all_cars():
   conn = get_connection()
-  results = []
   with conn:
+    cur = conn.cursor()
     cur.execute("SELECT id, name, price FROM cars")
     rows = cur.fetchall()
-    for row in rows:
-      results.append((row[0], row[1], row[2]))
   return rows
