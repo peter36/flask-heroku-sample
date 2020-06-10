@@ -8,10 +8,10 @@ DATABASE_URL = os.environ['DATABASE_URL']
 app = None
 
 def create_app():
-    app = Flask(__name__)
-    with app.app_context():
+    myapp = Flask(__name__)
+    with myapp.app_context():
         init_db()
-    return app
+    return myapp
 
 def get_connection():
     conn = pg.connect(DATABASE_URL, sslmode='require')
@@ -91,6 +91,5 @@ def index():
 
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support
-    global app
     app = create_app()
     app.run(threaded=True, port=5000)
