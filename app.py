@@ -54,8 +54,15 @@ def getcars():
 
 @app.route('/addcar/', methods=['POST'])
 def addcar():
-    name = request.form.get('name')
-    price = request.form.get('price')
+    name = ""
+    price = 0
+    if request.is_json:
+        content = request.get_json()
+        name = content['name']
+        price = content['price']
+    else:
+        name = request.form.get('name')
+        price = request.form.get('price')
     response = {}
     try:
         results = add_one_car(name, price)
