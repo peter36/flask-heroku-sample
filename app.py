@@ -79,7 +79,7 @@ def addcar():
         error_code = 403
 
     # Return the response in json format
-    return jsonify(response)
+    return jsonify(response), error_code
 
 
 @app.route('/post/', methods=['POST'])
