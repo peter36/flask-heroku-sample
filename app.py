@@ -63,17 +63,23 @@ def addcar():
     else:
         name = request.form.get('name')
         price = request.form.get('price')
+    
     response = {}
-    try:
-        results = add_one_car(name, price)
-        response["MESSAGE"] = results
-    except Exception as error:
-        print("name = {0}, price = {1}".format(name, price))
-        print(error)
-        response["ERROR"] = "Server error"
+    error_code = 200
+    if len(name) > 0 and price > 0:
+        try:
+            results = add_one_car(name, price)
+            response["MESSAGE"] = results
+        except Exception as error:
+            print(error)
+            response["ERROR"] = "Server error"
+            error_code = 500
+    else:
+        response["ERROR"] = "name or price not specified"
+        error_code = 403
 
     # Return the response in json format
-    return jsonify(response)
+    return jsonify(response), error_code
 
 
 @app.route('/post/', methods=['POST'])
