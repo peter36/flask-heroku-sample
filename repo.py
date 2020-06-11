@@ -13,14 +13,14 @@ def get_connection():
 # init db
 def init_db():
     cars = [
-    (1, 'Audi', 52642),
-    (2, 'Mercedes', 57127),
-    (3, 'Skoda', 9000),
-    (4, 'Volvo', 29000),
-    (5, 'Bentley', 350000),
-    (6, 'Citroen', 21000),
-    (7, 'Hummer', 41400),
-    (8, 'Volkswagen', 21600)
+    ('Audi', 52642),
+    ('Mercedes', 57127),
+    ('Skoda', 9000),
+    ('Volvo', 29000),
+    ('Bentley', 350000),
+    ('Citroen', 21000),
+    ('Hummer', 41400),
+    ('Volkswagen', 21600)
     ]
     conn = get_connection()
     with conn:
@@ -32,7 +32,7 @@ def init_db():
             name VARCHAR(255),
             price INT)
         """)
-        query = "INSERT INTO cars (id, name, price) VALUES (%s, %s, %s)"
+        query = "INSERT INTO cars (name, price) VALUES (%s, %s)"
         cur.executemany(query, cars)
         conn.commit()
 

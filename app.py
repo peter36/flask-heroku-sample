@@ -61,6 +61,7 @@ def addcar():
         results = add_one_car(name, price)
         response["MESSAGE"] = results
     except Exception as error:
+        print("name = {0}, price = {1}".format(name, price))
         print(error)
         response["ERROR"] = "Server error"
 
