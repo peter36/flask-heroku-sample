@@ -59,10 +59,10 @@ def addcar():
     if request.is_json:
         content = request.get_json()
         name = content['name']
-        price = content['price']
+        price = int(content['price'])
     else:
         name = request.form.get('name')
-        price = request.form.get('price')
+        price = int(request.form.get('price'))
     
     response = {}
     error_code = 200
