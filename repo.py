@@ -52,6 +52,7 @@ def add_one_car(name, price):
   with conn:
     cur = conn.cursor()
     query = "INSERT INTO cars (name, price) VALUES (%s, %s) RETURNING id"
-    id = cur.execute(query, (name, price))
+    cur.execute(query, (name, price))
+    id = cur.fetchone()[0]
   return id
 
